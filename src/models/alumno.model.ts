@@ -7,6 +7,7 @@ export class Alumno extends Model {
     public id!: number;
     public nombre!: string;
     public edad!: number;
+    public Clases? : Clase[];
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 

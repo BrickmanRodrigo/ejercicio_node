@@ -4,7 +4,7 @@ services:
     image: mysql:latest
     command: --init-file /data/application/init.sql
     volumes:
-        - ./docker/init.sql:/data/application/init.sql
+        - ./scripts/init.sql:/data/application/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: password123
       MYSQL_DATABASE: mydb

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Clase } from "../models/clase.model";
-import { UpdateOptions, DestroyOptions } from "sequelize";
+import { DestroyOptions } from "sequelize";
 import { Alumno } from "../models/alumno.model";
 
 export interface AlumnoInterface {
@@ -12,7 +12,7 @@ export interface AlumnoInterface {
 export class AlumnosController {
 
     public getAll(req: Request, res: Response) {
-        Alumno.findAll<Alumno>({ include: Clase })
+        Alumno.findAll()
             .then((alumnos: Array<Alumno>) => res.json(alumnos))
             .catch((err: Error) => res.status(500).json(err));
     }
@@ -20,7 +20,7 @@ export class AlumnosController {
     public create(req: Request, res: Response) {
         const params: AlumnoInterface = req.body;
 
-        Alumno.create<Alumno>(params)
+        Alumno.create(params)
             .then((alumno: Alumno) => {
                 return alumno.setClases(params.clase_id)
                     .then(response => res.status(201).json(response))
@@ -36,7 +36,7 @@ export class AlumnosController {
                 if (alumno) {
                     res.json(alumno);
                 } else {
-                    res.status(404).json({ errors: ["Node not found"] });
+                    res.status(404).json({ errors: ["Alumno not found"] });
                 }
             })
     }
@@ -55,16 +55,16 @@ export class AlumnosController {
 
     public findClasesById(req: Request, res: Response) {
         const alumnoId: string = req.params.id;
-
-        Alumno.findByPk(alumnoId)
-        .then((alumno: Alumno | null) => {
-            if (alumno) {
-                alumno.getClases()
-                .then((clases : Clase[]) => res.json(clases))                
-            } else {
-                res.status(404).json({ errors: ["Alumno not found"] });
-            }
-        })
-        .catch((err: Error) => res.status(500).json(err));
+        
+        // {trough: {attributes: []}} es para que no incluya la tabla intermedia del belongsToMany
+        Alumno.findByPk(alumnoId, { include: { model: Clase, through: { attributes: [] } }, })
+            .then((alumno: Alumno | null) => {
+                if (alumno) {
+                    res.json(alumno.Clases);          
+                } else {
+                    res.status(404).json({ errors: ["Alumno not found"] });
+                }
+            })
+            .catch((err: Error) => res.status(500).json(err));
     }
 }

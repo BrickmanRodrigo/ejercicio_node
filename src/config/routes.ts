@@ -20,12 +20,29 @@ export class Routes {
         app.route("/alumnos/:id/clases")
         .get(this.alumnosController.findClasesById);
 
+        
+        app.route("/profes")
+        .get(this.profesoresController.getAll)
+        .post(this.profesoresController.create);
+
+        app.route("/profes/:id")
+        .get(this.profesoresController.findById)
+        .delete(this.profesoresController.delete);
+
+
         app.route("/clases")
         .get(this.clasesController.getAll)
         .post(this.clasesController.create);
 
-        app.route("/profesores")
-        .get(this.profesoresController.getAll)
-        .post(this.profesoresController.create);
+        app.route("/clases/:id")
+        .get(this.clasesController.findById)
+        .delete(this.clasesController.delete);
+
+        app.route("/clases/:id/profe")
+        .get(this.clasesController.findProfeById);
+
+
+        app.route("/statistics")
+        .get(this.profesoresController.getStatisticsByProfe)
     }
 }
