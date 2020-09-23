@@ -1,5 +1,4 @@
 # ejercicio_node
-#
 ---
 ## How to run
 #### Start DB
@@ -12,10 +11,8 @@ docker-compose up
 ```bash
 npm run start
 ```
-#
 ---
 ## POST Examples
-#
 #### /profes
 ```json
 {
