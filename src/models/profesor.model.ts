@@ -1,6 +1,12 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../config/database";
 
+export interface ProfesorInterface {
+    nombre: string;
+    edad: number;
+    matricula: string;
+}
+
 export class Profesor extends Model {
   public id!: number;
   public nombre!: string;

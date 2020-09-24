@@ -1,7 +1,12 @@
 import { Model, DataTypes, BelongsToManyGetAssociationsMixin, BelongsToManySetAssociationsMixin, BelongsToManyAddAssociationsMixin } from "sequelize";
 import { database } from "../config/database";
 import { Clase } from "./clase.model";
-import { Profesor } from "./profesor.model";
+
+export interface AlumnoInterface {
+    nombre: string;
+    edad: number;
+    clase_id: number[];
+}
 
 export class Alumno extends Model {
     public id!: number;

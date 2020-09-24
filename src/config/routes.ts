@@ -1,3 +1,6 @@
+import { Request, Response } from "express";
+import { ClaseInterface } from "models/clase.model";
+import { ProfesorInterface } from "models/profesor.model";
 import { AlumnosController } from "../controllers/alumnos.controller";
 import { ClasesController } from "../controllers/clases.controller";
 import { ProfesoresController } from "../controllers/profesores.controller";
@@ -23,7 +26,7 @@ export class Routes {
         
         app.route("/profes")
         .get(this.profesoresController.getAll)
-        .post(this.profesoresController.create);
+        .post((req : Request, res : Response) => this.profesoresController.create<ProfesorInterface>(req, res));
 
         app.route("/profes/:id")
         .get(this.profesoresController.findById)
@@ -32,7 +35,7 @@ export class Routes {
 
         app.route("/clases")
         .get(this.clasesController.getAll)
-        .post(this.clasesController.create);
+        .post((req : Request, res : Response) => this.clasesController.create<ClaseInterface>(req, res));
 
         app.route("/clases/:id")
         .get(this.clasesController.findById)
